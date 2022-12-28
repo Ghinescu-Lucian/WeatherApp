@@ -232,4 +232,12 @@ public class MainActivity extends AppCompatActivity {
             mLocationManager.removeUpdates(mLocationListner);
         }
     }
+
+    public void getLocation(View view) {
+
+        if(view.getId() == R.id.location){
+             System.out.println("CEVA");
+            startActivity( new Intent(this, MapsActivity.class));
+        }
+    }
 }

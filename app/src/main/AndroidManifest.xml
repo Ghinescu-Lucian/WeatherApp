@@ -26,7 +26,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="AIzaSyDdPqKxCSy4yHXpyM5_cEBsq3E4ACEBzZs" />
         <activity android:name=".cityFinder"/>
         <activity android:name=".MainActivity"
             android:exported="true">
