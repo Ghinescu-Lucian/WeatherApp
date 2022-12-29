@@ -1,6 +1,5 @@
 package com.upt.cti.weatherapp;
 
-import static java.lang.Thread.sleep;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -91,7 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     // Add a marker in Sydney and move the camera
                                     LatLng sydney = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
                                     mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,9));
 
                                 } catch (IOException e) {
                                     e.printStackTrace();

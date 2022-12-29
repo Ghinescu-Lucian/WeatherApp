@@ -1,5 +1,7 @@
 package com.upt.cti.weatherapp;
 
+import static java.lang.Thread.sleep;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     final float MIN_DISTANCE = 1000;
     final int REQUEST_CODE = 101;
 
+    private LocationService locationService;
+    private  AppState appState = AppState.getInstance();
+
 
     String Location_Provider = LocationManager.GPS_PROVIDER;
 
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mweatherIcon = findViewById(R.id.weatherIcon);
         mCityFinder = findViewById(R.id.cityFinder);
         NameofCity = findViewById(R.id.cityName);
+        locationService = new LocationService(this);
 
 
         mCityFinder.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         String city= mIntent.getStringExtra("City");
         if(city!=null)
         {
+//            city=  appState.getCity();
             getWeatherForNewCity(city);
         }
         else
@@ -97,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void getWeatherForNewCity(String city)
     {
+        System.out.println("NOUL oras: "+appState.getCity()+" "+appState.isReady );
         RequestParams params=new RequestParams();
+
         params.put("q",city);
         params.put("appid",APP_ID);
         letsdoSomeNetworking(params);
@@ -108,15 +117,24 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getWeatherForCurrentLocation() {
-
+        System.out.println("Am ajuns aici prima data!");
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mLocationListner = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-
+//                while(appState.isReady == false){
+//                    try {
+//                        sleep(500);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
                 String Latitude = String.valueOf(location.getLatitude());
                 String Longitude = String.valueOf(location.getLongitude());
 
+
+                System.out.println("CEVA BUN NNNN:"+appState.getCity() + " "+Latitude+Longitude);
+//                LocationService.getLatitude();
                 RequestParams params =new RequestParams();
                 params.put("lat" ,Latitude);
                 params.put("lon",Longitude);
@@ -238,6 +256,13 @@ public class MainActivity extends AppCompatActivity {
         if(view.getId() == R.id.location){
              System.out.println("CEVA");
             startActivity( new Intent(this, MapsActivity.class));
+        }
+    }
+
+    public void getLocationAccuWeather(View view) {
+        if(view.getId() == R.id.accuWeather){
+            System.out.println("CEVA");
+            startActivity( new Intent(this, AccuWeather.class));
         }
     }
 }
