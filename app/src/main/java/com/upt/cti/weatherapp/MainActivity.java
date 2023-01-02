@@ -7,13 +7,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,6 +29,11 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Iterator;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -40,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LocationService locationService;
     private  AppState appState = AppState.getInstance();
+
 
 
     String Location_Provider = LocationManager.GPS_PROVIDER;
@@ -64,7 +74,14 @@ public class MainActivity extends AppCompatActivity {
         mweatherIcon = findViewById(R.id.weatherIcon);
         mCityFinder = findViewById(R.id.cityFinder);
         NameofCity = findViewById(R.id.cityName);
+
         locationService = new LocationService(this);
+
+//        new FetchForeca().execute();
+        URL url = VisualCrosingNetworkUtils.buildForCurrent(appState.getLatitude(),appState.getLongitude());
+       System.out.println("VisualCrossing url: "+url);
+        new FetchVisualCrossing().execute(url);
+//        VisualCrosingNetwork.buildForHourly(appState.getLatitude(),appState.getLongitude());
 
 
         mCityFinder.setOnClickListener(new View.OnClickListener() {
@@ -131,9 +148,10 @@ public class MainActivity extends AppCompatActivity {
 //                }
                 String Latitude = String.valueOf(location.getLatitude());
                 String Longitude = String.valueOf(location.getLongitude());
+                appState.setLatitude(location.getLatitude());
+                appState.setLongitude(location.getLongitude());
 
-
-                System.out.println("CEVA BUN NNNN:"+appState.getCity() + " "+Latitude+Longitude);
+                System.out.println("CEVA BUN NNNN:"+appState.getCity() + " "+Latitude+" "+Longitude);
 //                LocationService.getLatitude();
                 RequestParams params =new RequestParams();
                 params.put("lat" ,Latitude);
@@ -213,6 +231,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"Data Get Success",Toast.LENGTH_SHORT).show();
 
                 weatherData weatherD=weatherData.fromJson(response);
+//                if(appState.getCity()==null){
+                    appState.setCity(weatherD.getMcity());
+//                }
+
                 updateUI(weatherD);
 
 
@@ -265,4 +287,67 @@ public class MainActivity extends AppCompatActivity {
             startActivity( new Intent(this, AccuWeather.class));
         }
     }
+
+    private class FetchForeca extends AsyncTask<URL, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(URL... urls) {
+//            URL weatherUrl = urls[0];
+            String weatherSearchResults = null;
+            System.out.println( "FORECA: "+"AICI");
+            ForecaNetworkUtils.getDaily(45.190829, 22.352132);
+
+//            try {
+//                weatherSearchResults = NetworkUtils.getResponseFromHttpUrl(weatherUrl);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+////            Log.i(TAG, "doInBackground: weatherSearchResults: " + weatherSearchResults);
+            return weatherSearchResults;
+        }
+
+        @Override
+        protected void onPostExecute(String weatherSearchResults) {
+
+            super.onPostExecute(weatherSearchResults);
+        }
+    }
+
+    private class FetchVisualCrossing extends AsyncTask<URL, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            URL weatherUrl = urls[0];
+            String weatherSearchResults = null;
+//            System.out.println( "VisualCrossing: "+"AICI");
+
+
+            try {
+                weatherSearchResults = VisualCrosingNetworkUtils.getResponseFromHttpUrl(weatherUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("VisualCrossing result: "+weatherSearchResults);
+//
+            return weatherSearchResults;
+        }
+
+        @Override
+        protected void onPostExecute(String weatherSearchResults) {
+
+            super.onPostExecute(weatherSearchResults);
+        }
+    }
+
 }

@@ -3,6 +3,8 @@ package com.upt.cti.weatherapp;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import java.text.Normalizer;
+
 class AppState {
     // Static variable reference of single_instance
     // of type Singleton
@@ -44,7 +46,15 @@ class AppState {
   }
 
   public void setCity(String city){
+        // ăîâșț
+
+        city= city.replaceAll("ş","s");
+        city= city.replaceAll("ă","a");
+        city= city.replaceAll("â","a");
+        city= city.replaceAll("ț","t");
+        city= city.replaceAll("î","i");
         this.city=city;
+        System.out.println("AM setat locatia!"+city);
   }
 
   public double getLongitude(){ return this.longitude;}

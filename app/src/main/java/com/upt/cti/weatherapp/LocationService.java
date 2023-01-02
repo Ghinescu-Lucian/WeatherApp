@@ -60,18 +60,21 @@ public class LocationService{
 
     private void getLastLocation() {
         Location location;
+        System.out.println("AM apelat gat last location!");
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation()
                     .addOnSuccessListener(new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
+                            System.out.println("AM intrat in onSUcces");
                             if (location != null) {
                                 Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+                                System.out.println("AM intrat in if");
 
                                 try {
 
-//                                    System.out.println("CEVA BUN");
+                                 //   System.out.println("CEVA BUN");
                                     addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                     appState.setLatitude(addresses.get(0).getLatitude());
                                     appState.setLongitude(addresses.get(0).getLongitude());

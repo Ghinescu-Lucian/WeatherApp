@@ -1,5 +1,7 @@
 package com.upt.cti.weatherapp;
 
+import static java.lang.Thread.sleep;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -28,17 +30,21 @@ public class AccuWeather extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accu_weather);
         apstate = AppState.getInstance();
-
+        int a=0;
         listView = findViewById(R.id.idListView);
 
-        URL locationUrl = NetworkUtils.buildUrlForLocation(apstate.getCity());
+
+        URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(apstate.getCity());
         new FetchLocationDetails().execute(locationUrl);
 
-        while(LocalityKey==null);
 
-        NetworkUtils.addLocationKey(LocalityKey);
+        while(LocalityKey==null){
+           a=1;
+        }
 
-        URL weatherUrl = NetworkUtils.buildUrlForWeather();
+        AccuWeatherNetworkUtils.addLocationKey(LocalityKey);
+
+        URL weatherUrl = AccuWeatherNetworkUtils.buildUrlForWeatherDaily();
         System.out.println(weatherUrl+"");
 
         new FetchWeatherDetails().execute(weatherUrl);
@@ -62,7 +68,7 @@ public class AccuWeather extends AppCompatActivity {
             String weatherSearchResults = null;
 
             try {
-                weatherSearchResults = NetworkUtils.getResponseFromHttpUrl(weatherUrl);
+                weatherSearchResults = AccuWeatherNetworkUtils.getResponseFromHttpUrl(weatherUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -101,14 +107,23 @@ public class AccuWeather extends AppCompatActivity {
             String weatherSearchResults = null;
 
             try {
-                weatherSearchResults = NetworkUtils.getResponseFromHttpUrl(weatherUrl);
+                weatherSearchResults = AccuWeatherNetworkUtils.getResponseFromHttpUrl(weatherUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.i(TAG, "doInBackground: weatherSearchResults: " + weatherSearchResults);
+            Log.i(TAG, "doInBackground: locationSearchResults: " + weatherSearchResults);
 //            System.out.println("ACCUWEATHER "+ weatherSearchResults);
 //            LocalityKey = weatherSearchResults;
-            LocalityKey = weatherSearchResults.substring(21,27);
+            if(weatherSearchResults!=null) {
+                int start = weatherSearchResults.indexOf("Key");
+                int end = weatherSearchResults.indexOf("Type");
+                String s = weatherSearchResults.substring(start+6,end-3);
+               // System.out.println("KEY : "+s);
+                LocalityKey = s;
+            }
+            else {
+                System.out.println("Nu am primit location key !");
+            }
 //            System.out.println("LOCALITY KEY "+LocalityKey);
             return weatherSearchResults;
         }
@@ -169,6 +184,7 @@ public class AccuWeather extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
 
