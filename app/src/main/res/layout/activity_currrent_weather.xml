@@ -81,6 +81,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="-420dp"
         android:layout_marginBottom="98dp"
+        android:background="@drawable/buttondesign"
         android:text="HOURLY FORECAST"
         android:textColor="#ffffff"
         android:textSize="34sp" />
@@ -112,6 +113,7 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="97dp"
+        android:background="@drawable/buttondesign"
         android:text="7-DAY FORECAST"
         android:textColor="#ffffff"
         android:textSize="34sp" />
