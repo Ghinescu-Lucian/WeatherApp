@@ -5,6 +5,7 @@ public class Weather {
     String minTemp;
     String maxTemp;
     String link;
+    String code;
 
     public String getDate() {
         return date;
@@ -36,5 +37,15 @@ public class Weather {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public void setCode(String code){ this.code = code;}
+
+    public String getCode(){ return this.code;}
+
+    @Override
+    public String toString(){
+        String s = date +"`"+minTemp+"`"+maxTemp+"`"+link+"`"+code;
+        return s;
     }
 }

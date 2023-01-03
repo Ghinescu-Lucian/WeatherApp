@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class weatherData {
 
-    private String mTemperature,micon,mcity,mWeatherType;
+    public String mTemperature,micon,mcity,mWeatherType;
     private int mCondition;
 
     public static weatherData fromJson(JSONObject jsonObject)

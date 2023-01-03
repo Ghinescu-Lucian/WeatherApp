@@ -11,6 +11,8 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -33,7 +35,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -50,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private LocationService locationService;
     private  AppState appState = AppState.getInstance();
 
+    private CalculateParams calculator;
+
 
 
     String Location_Provider = LocationManager.GPS_PROVIDER;
@@ -58,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView mweatherIcon;
 
     RelativeLayout mCityFinder;
+
+    Weather currentWeather;
 
 
     LocationManager mLocationManager;
@@ -76,13 +85,8 @@ public class MainActivity extends AppCompatActivity {
         NameofCity = findViewById(R.id.cityName);
 
         locationService = new LocationService(this);
-
-//        new FetchForeca().execute();
-        URL url = VisualCrosingNetworkUtils.buildForCurrent(appState.getLatitude(),appState.getLongitude());
-       System.out.println("VisualCrossing url: "+url);
-        new FetchVisualCrossing().execute(url);
-//        VisualCrosingNetwork.buildForHourly(appState.getLatitude(),appState.getLongitude());
-
+        calculator = new CalculateParams();
+        currentWeather = new Weather();
 
         mCityFinder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getWeatherForCurrentLocation(0);
         Intent mIntent=getIntent();
         String city= mIntent.getStringExtra("City");
         if(city!=null)
@@ -112,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            getWeatherForCurrentLocation();
+            getWeatherForCurrentLocation(1);
         }
 
 
@@ -133,31 +138,42 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void getWeatherForCurrentLocation() {
-        System.out.println("Am ajuns aici prima data!");
+    private void getWeatherForCurrentLocation(int ok) {
+
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mLocationListner = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-//                while(appState.isReady == false){
-//                    try {
-//                        sleep(500);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
+
                 String Latitude = String.valueOf(location.getLatitude());
                 String Longitude = String.valueOf(location.getLongitude());
-                appState.setLatitude(location.getLatitude());
-                appState.setLongitude(location.getLongitude());
+                if(ok==0) {
+                    appState.setLatitude(location.getLatitude());
+                    appState.setLongitude(location.getLongitude());
+                    Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                    System.out.println("lat/long: "+AppState.getInstance().getLatitude()+" "+ AppState.getInstance().getLongitude());
+                    List<Address> addresses = null;
+                    try {
+                        addresses = geocoder.getFromLocation(AppState.getInstance().getLatitude(), AppState.getInstance().getLongitude(), 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-                System.out.println("CEVA BUN NNNN:"+appState.getCity() + " "+Latitude+" "+Longitude);
+                    String cityName = addresses.get(0).getLocality();
+                    AppState.getInstance().setCity(cityName);
+//                    System.out.println("Oras: "+cityName);
+
+
+                    new FetchCalculateCurrent().execute();
+                }
+//                System.out.println("CEVA BUN NNNN:"+appState.getCity() + " "+Latitude+" "+Longitude);
 //                LocationService.getLatitude();
                 RequestParams params =new RequestParams();
                 params.put("lat" ,Latitude);
                 params.put("lon",Longitude);
                 params.put("appid",APP_ID);
-                letsdoSomeNetworking(params);
+                if(ok==1)
+                    letsdoSomeNetworking(params);
 
 
 
@@ -207,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
             if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
             {
                 Toast.makeText(MainActivity.this,"Locationget Succesffully",Toast.LENGTH_SHORT).show();
-                getWeatherForCurrentLocation();
+                getWeatherForCurrentLocation(1);
             }
             else
             {
@@ -235,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
                     appState.setCity(weatherD.getMcity());
 //                }
 
+//                weatherD.mTemperature(CalculateParams.)
                 updateUI(weatherD);
 
 
@@ -300,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
 //            URL weatherUrl = urls[0];
             String weatherSearchResults = null;
             System.out.println( "FORECA: "+"AICI");
-            ForecaNetworkUtils.getDaily(45.190829, 22.352132);
+            ForecaNetworkUtils.getCurrent(45.190829, 22.352132);
 
 //            try {
 //                weatherSearchResults = NetworkUtils.getResponseFromHttpUrl(weatherUrl);
@@ -341,6 +358,35 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("VisualCrossing result: "+weatherSearchResults);
 //
             return weatherSearchResults;
+        }
+
+        @Override
+        protected void onPostExecute(String weatherSearchResults) {
+
+            super.onPostExecute(weatherSearchResults);
+        }
+    }
+
+    private class FetchCalculateCurrent extends AsyncTask<URL, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(URL... urls) {
+//            URL weatherUrl = urls[0];
+            String weatherSearchResults = null;
+            ForecaNetworkUtils.getLocation(AppState.getInstance().getLongitude(), AppState.getInstance().getLatitude());
+            CalculateParams c = new CalculateParams();
+//            c.retrieveCurrentData();
+            c.retrieveDailyData();
+            Weather d = c.getCurrentWeather();
+
+            currentWeather = d;
+
+            return d.toString();
         }
 
         @Override

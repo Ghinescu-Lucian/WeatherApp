@@ -48,13 +48,14 @@ class AppState {
   public void setCity(String city){
         // ăîâșț
 
-        city= city.replaceAll("ş","s");
-        city= city.replaceAll("ă","a");
-        city= city.replaceAll("â","a");
-        city= city.replaceAll("ț","t");
-        city= city.replaceAll("î","i");
+
+        city= city.replace('ş','s');
+        city= city.replace('ă','a');
+        city= city.replace('â','a');
+        city= city.replace('ț','t');
+        city= city.replace('î','i');
         this.city=city;
-        System.out.println("AM setat locatia!"+city);
+     
   }
 
   public double getLongitude(){ return this.longitude;}

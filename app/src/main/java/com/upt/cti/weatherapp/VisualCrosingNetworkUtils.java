@@ -17,12 +17,12 @@ public class VisualCrosingNetworkUtils {
     private static String base_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
     private static String hourly_URL = "?unitGroup=metric&include=hours&key=GAJN9RELWJUAMQJUQZEYTUP5R&contentType=json";
     private static String daily_URL = "?unitGroup=metric&include=days&key=GAJN9RELWJUAMQJUQZEYTUP5R&contentType=json";
-    private static String current_URL = "?unitGroup=metric&include=current&key=GAJN9RELWJUAMQJUQZEYTUP5R&contentType=json";
+    private static String current_URL = "/today?unitGroup=metric&include=current&key=GAJN9RELWJUAMQJUQZEYTUP5R&contentType=json";
 
 
     public static URL buildForHourly(double latitude, double longitude){
         String s = base_URL+latitude+"%2C%20"+longitude+hourly_URL;
-
+//        System.out.println("VisualCrossing: "+s);
         Uri builtUri = Uri.parse(s).buildUpon().build();
 
         URL url=null;
@@ -33,7 +33,7 @@ public class VisualCrosingNetworkUtils {
             System.out.println("VisualCrosiingNetwork: hourly build URL error!");
         }
 
-        System.out.println("VisualCrossing: "+s);
+//        System.out.println("VisualCrossing: "+s);
         return url;
     }
 
@@ -50,7 +50,7 @@ public class VisualCrosingNetworkUtils {
             System.out.println("VisualCrosiingNetwork: current build URL error!");
         }
 
-        System.out.println("VisualCrossing: "+s);
+//        System.out.println("VisualCrossing: "+s);
         return url;
     }
 

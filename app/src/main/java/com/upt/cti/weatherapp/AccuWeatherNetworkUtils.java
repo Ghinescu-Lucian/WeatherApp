@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 
 public class AccuWeatherNetworkUtils {
-    private static final String TAG = "NetworkUtils";
+    private static final String TAG = "AccuWeatherNetworkUtils";
 
     private static String WEATHERDB_BASE_URL_LOCATION =
             "https://dataservice.accuweather.com/locations/v1/cities/search";
@@ -30,7 +30,7 @@ public class AccuWeatherNetworkUtils {
             "http://dataservice.accuweather.com/forecasts/v1/hourly/1hour/";
 
     private static String WEATHERDB_BASE_URL_HOURLY =
-            "http://dataservice.accuweather.com/forecasts/v1/hourly/24hour/";
+            "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/";
 
     private final static String API_KEY = "wcKFi03pnMHVVuZitC3reSGx6wdCkyaU";
 
@@ -70,7 +70,7 @@ public class AccuWeatherNetworkUtils {
         Uri builtUri = Uri.parse(WEATHERDB_BASE_URL_DAILY).buildUpon()
                 .appendQueryParameter(PARAM_API_KEY, API_KEY)
                 .appendQueryParameter(PARAM_METRIC, METRIC_VALUE)
-                .appendQueryParameter("language","ro")
+                .appendQueryParameter("language","en")
                 .build();
 
         URL url = null;
@@ -88,7 +88,7 @@ public class AccuWeatherNetworkUtils {
         Uri builtUri = Uri.parse(WEATHERDB_BASE_URL_CURRENT).buildUpon()
                 .appendQueryParameter(PARAM_API_KEY, API_KEY)
                 .appendQueryParameter(PARAM_METRIC, METRIC_VALUE)
-                .appendQueryParameter("language","ro")
+                .appendQueryParameter("language","en")
                 .build();
 
         URL url = null;
@@ -106,7 +106,7 @@ public class AccuWeatherNetworkUtils {
         Uri builtUri = Uri.parse(WEATHERDB_BASE_URL_HOURLY).buildUpon()
                 .appendQueryParameter(PARAM_API_KEY, API_KEY)
                 .appendQueryParameter(PARAM_METRIC, METRIC_VALUE)
-                .appendQueryParameter("language","ro")
+                .appendQueryParameter("language","en")
                 .build();
 
         URL url = null;
@@ -116,7 +116,7 @@ public class AccuWeatherNetworkUtils {
             e.printStackTrace();
         }
 
-        Log.i(TAG, "buildUrlForWeatherCurrent: url: "+url);
+        Log.i(TAG, "buildUrlForWeatherHourly: url: "+url);
         return url;
     }
 
