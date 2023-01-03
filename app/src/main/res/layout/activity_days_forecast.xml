@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#242343">
+
+    <TextView
+        android:id="@+id/grade7"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monday"
+        android:layout_marginTop="527dp"
+        android:layout_marginBottom="-91dp"
+        android:text="---- °C"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/grade6"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monday"
+        android:layout_marginTop="449dp"
+        android:layout_marginBottom="-91dp"
+        android:text="---- °C"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/grade5"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monday"
+        android:layout_marginTop="372dp"
+        android:layout_marginBottom="-91dp"
+        android:text="---- °C"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/grade4"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monday"
+        android:layout_marginTop="291dp"
+        android:layout_marginBottom="-91dp"
+        android:text="---- °C"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/grade3"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monday"
+        android:layout_marginTop="201dp"
+        android:layout_marginBottom="-91dp"
+        android:text="---- °C"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/grade2"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monday"
+        android:layout_marginTop="123dp"
+        android:layout_marginBottom="-91dp"
+        android:text="---- °C"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/dayforecast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="  7-DAY FORECAST"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="51dp" />
+
+    <TextView
+        android:id="@+id/monday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dayforecast"
+        android:layout_marginTop="58dp"
+        android:text="Monday"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="156dp" />
+
+    <TextView
+        android:id="@+id/tuesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monday"
+        android:layout_marginTop="70dp"
+        android:text="Tuesday"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="218dp" />
+
+    <TextView
+        android:id="@+id/wednesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tuesday"
+        android:layout_marginTop="53dp"
+        android:text="Wednesday"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="242dp" />
+
+    <TextView
+        android:id="@+id/friday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/thursday"
+        android:layout_marginBottom="-122dp"
+        android:text="Friday"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/saturday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/friday"
+        android:layout_marginBottom="-106dp"
+        android:text="Saturday"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/thursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/wednesday"
+        android:layout_marginBottom="-173dp"
+        android:text="Thursday"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sunday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/saturday"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="-109dp"
+        android:text="Sunday"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/grade"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monday"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="-91dp"
+        android:text="---- °C"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_alignEnd="@id/monday"
+        android:layout_marginEnd="-185dp"
+        android:text="grade" />
+
+    <Button
+        android:id="@+id/hourlyweather2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignRight="@id/weatherdays"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="420dp"
+        android:layout_marginBottom="19dp"
+        android:text="HOURLY FORECAST"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        tools:layout_alignRight="@id/sunday" />
+</RelativeLayout>

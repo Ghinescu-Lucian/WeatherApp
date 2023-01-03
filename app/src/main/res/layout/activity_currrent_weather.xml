@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#242343">
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="TextView"-->
+    <!--        tools:layout_editor_absoluteX="53dp"-->
+    <!--        tools:layout_editor_absoluteY="18dp" />-->
+
+    <TextView
+        android:id="@+id/currentweather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="30sp"
+        android:text="Current Weather"
+        android:textColor="#E4E1E1"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_marginTop="80dp"
+        app:srcCompat="@drawable/sunny" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="664dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView3"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="-244dp"
+        android:paddingStart="30dp"
+        android:text="5 °C"
+        android:textColor="#EFECEC"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/weatherConditionO"
+        android:layout_width="221dp"
+        android:layout_height="61dp"
+        android:layout_alignTop="@id/temperature"
+        android:layout_marginTop="88dp"
+        android:text="....."
+        android:textColor="#F1F0F0"
+        android:textSize="48sp" />
+
+    <TextView
+        android:id="@+id/cityNameO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/weatherConditionO"
+        android:layout_marginTop="106dp"
+        android:paddingStart="30sp"
+        android:text="Fetching___"
+        android:textColor="#F1EEEE"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/hourlyweather"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignRight="@id/weatherdays"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="-420dp"
+        android:layout_marginBottom="98dp"
+        android:text="HOURLY FORECAST"
+        android:textColor="#ffffff"
+        android:textSize="34sp" />
+
+    <RelativeLayout
+        android:id="@+id/cityFinderO"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="194dp"
+        android:background="@drawable/buttondesign">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Want To Search For New City"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/weatherdays"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="97dp"
+        android:text="7-DAY FORECAST"
+        android:textColor="#ffffff"
+        android:textSize="34sp" />
+
+</RelativeLayout>
