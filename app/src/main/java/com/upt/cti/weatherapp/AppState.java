@@ -13,6 +13,8 @@ class AppState {
     private static double latitude;
     private static String city;
 
+    private static String locationKey;
+
     public static boolean isReady=false;
 
     // Declaring a variable of type String
@@ -45,6 +47,8 @@ class AppState {
         this.latitude=latitude;
   }
 
+  public void setLocationKey(String key){ this.locationKey = key;}
+
   public void setCity(String city){
         // ăîâșț
 
@@ -61,6 +65,8 @@ class AppState {
   public double getLongitude(){ return this.longitude;}
 
   public double getLatitude(){ return this.latitude;}
+
+  public String getLocationKey(){return this.locationKey;}
 
   public String getCity(){ return this.city;}
 

@@ -44,9 +44,13 @@ public class AccuWeatherNetworkUtils {
     private final static String PARAM_Q = "q";
 
     public static void addLocationKey(String key){
-        WEATHERDB_BASE_URL_DAILY = WEATHERDB_BASE_URL_DAILY.concat(key);
-        WEATHERDB_BASE_URL_CURRENT = WEATHERDB_BASE_URL_CURRENT.concat(key);
-        WEATHERDB_BASE_URL_HOURLY = WEATHERDB_BASE_URL_HOURLY.concat(key);
+//        System.out.println("Am ajuns la addLocationKey");
+        if(WEATHERDB_BASE_URL_CURRENT.length() == 61) {
+//            System.out.println("Am ajuns la addLocationKey");
+            WEATHERDB_BASE_URL_DAILY = WEATHERDB_BASE_URL_DAILY.concat(key);
+            WEATHERDB_BASE_URL_CURRENT = WEATHERDB_BASE_URL_CURRENT.concat(key);
+            WEATHERDB_BASE_URL_HOURLY = WEATHERDB_BASE_URL_HOURLY.concat(key);
+        }
     }
 
     public static URL buildUrlForLocation(String location) {

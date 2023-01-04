@@ -1,7 +1,7 @@
 package com.upt.cti.weatherapp;
 
 public class Weather {
-    String date;
+    String date="abc";
     String minTemp;
     String maxTemp;
     String link;

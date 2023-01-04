@@ -14,14 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherApp">
         <activity
+            android:name=".DailyForecasts"
+            android:exported="false" />
+        <activity
+            android:name=".HourlyForecasts"
+            android:exported="false" />
+        <activity
             android:name=".CurrentWeather"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".AccuWeather"
@@ -44,9 +49,7 @@
         <activity android:name=".cityFinder" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".MapsActivity"
             android:exported="true"
