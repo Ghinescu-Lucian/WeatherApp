@@ -185,21 +185,6 @@
         android:text="grade" />
 
     <Button
-        android:id="@+id/hourlyweather2"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignRight="@id/weatherdays"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="420dp"
-        android:layout_marginBottom="19dp"
-        android:text="HOURLY FORECAST"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        tools:layout_alignRight="@id/sunday" />
-
-    <Button
         android:id="@+id/currentweatherO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
