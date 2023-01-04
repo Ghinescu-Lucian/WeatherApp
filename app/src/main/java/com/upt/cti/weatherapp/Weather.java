@@ -7,6 +7,10 @@ public class Weather {
     String link;
     String code;
 
+    public Weather(){
+
+    }
+
     public String getDate() {
         return date;
     }
@@ -47,5 +51,14 @@ public class Weather {
     public String toString(){
         String s = date +"`"+minTemp+"`"+maxTemp+"`"+link+"`"+code;
         return s;
+    }
+
+    public Weather(String s){
+        String[] arr = s.split("`");
+        this.date = arr[0];
+        this.minTemp = arr[1];
+        this.maxTemp = arr[2];
+        this.link = arr[3];
+        this.code = arr[4];
     }
 }
