@@ -6,30 +6,23 @@
     android:layout_height="match_parent"
     android:background="#242343">
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="TextView"-->
-    <!--        tools:layout_editor_absoluteX="53dp"-->
-    <!--        tools:layout_editor_absoluteY="18dp" />-->
-
     <TextView
         android:id="@+id/currentweather"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:paddingStart="30sp"
         android:text="Current Weather"
         android:textColor="#E4E1E1"
-        android:textSize="48sp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView0"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="200dp"
         android:layout_marginTop="80dp"
-        app:srcCompat="@drawable/sunny" />
+        app:srcCompat="@drawable/finding" />
 
     <TextView
         android:id="@+id/textView3"
@@ -38,53 +31,41 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/temperature"
+        android:id="@+id/temperature0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView3"
+        android:layout_alignTop="@+id/cityName0"
         android:layout_centerVertical="true"
-        android:layout_marginTop="-244dp"
+        android:layout_marginTop="50dp"
         android:paddingStart="30dp"
-        android:text="5 °C"
+        android:text="... °C"
         android:textColor="#EFECEC"
-        android:textSize="50sp"
+        android:textSize="35sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/weatherConditionO"
         android:layout_width="221dp"
         android:layout_height="61dp"
-        android:layout_alignTop="@id/temperature"
-        android:layout_marginTop="88dp"
+        android:layout_alignTop="@id/temperature0"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="50dp"
         android:text="....."
         android:textColor="#F1F0F0"
-        android:textSize="48sp" />
+        android:textSize="32sp" />
 
     <TextView
-        android:id="@+id/cityNameO"
+        android:id="@+id/cityName0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/weatherConditionO"
-        android:layout_marginTop="106dp"
+        android:layout_alignTop="@id/imageView0"
+        android:layout_marginTop="250dp"
         android:paddingStart="30sp"
         android:text="Fetching___"
         android:textColor="#F1EEEE"
-        android:textSize="40sp" />
+        android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/hourlyweather"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignRight="@id/weatherdays"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="-420dp"
-        android:layout_marginBottom="98dp"
-        android:background="@drawable/buttondesign"
-        android:text="HOURLY FORECAST"
-        android:textColor="#ffffff"
-        android:textSize="34sp" />
 
     <RelativeLayout
         android:id="@+id/cityFinderO"
@@ -92,30 +73,55 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="194dp"
+        android:layout_marginBottom="104dp"
         android:background="@drawable/buttondesign">
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/citySearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
             android:text="Want To Search For New City"
             android:textColor="#ffffff"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/weatherdays"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="97dp"
-        android:background="@drawable/buttondesign"
-        android:text="7-DAY FORECAST"
-        android:textColor="#ffffff"
-        android:textSize="34sp" />
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        >
+
+
+        <Button
+            android:id="@+id/weatherdays"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+
+            android:background="@drawable/buttondesign"
+            android:text="7-DAY FORECAST"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/hourlyweather"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_toRightOf="@id/weatherdays"
+            android:background="@drawable/buttondesign"
+            android:text="HOURLY FORECAST"
+            android:textColor="#ffffff"
+            android:textSize="13sp" />
+    </LinearLayout>
 
 </RelativeLayout>

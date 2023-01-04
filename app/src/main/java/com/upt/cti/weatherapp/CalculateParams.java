@@ -33,48 +33,50 @@ public class CalculateParams {
     public void retrieveCurrentData(){
 
 //       AccuWeatherNetworkUtils.addLocationKey("290867");
-        URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(AppState.getInstance().getCity());
-        String response=null;
-        try {
-            response = AccuWeatherNetworkUtils.getResponseFromHttpUrl(locationUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            JSONObject obj = new JSONObject(response);
-            String key = obj.getString("Key");
-            AccuWeatherNetworkUtils.addLocationKey(key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        URL urlAcc = AccuWeatherNetworkUtils.buildUrlForWeatherCurrent();
-       String accuResult=null;
-        try {
-             accuResult = AccuWeatherNetworkUtils.getResponseFromHttpUrl(urlAcc);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        accuResult = accuResult.substring(1, accuResult.length()-1);
+//        URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(AppState.getInstance().getCity());
+//        String response=null;
+//        try {
+//            response = AccuWeatherNetworkUtils.getResponseFromHttpUrl(locationUrl);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            JSONObject obj = new JSONObject(response);
+//            String key = obj.getString("Key");
+//            AccuWeatherNetworkUtils.addLocationKey(key);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        URL urlAcc = AccuWeatherNetworkUtils.buildUrlForWeatherCurrent();
+//       String accuResult=null;
+//        try {
+//             accuResult = AccuWeatherNetworkUtils.getResponseFromHttpUrl(urlAcc);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        accuResult = accuResult.substring(1, accuResult.length()-1);
+//        Weather accuW = new Weather();
+//        JSONObject obj = null;
+//        JSONObject temp = null;
+//        try{
+//            obj = new JSONObject(accuResult);
+//            temp = new JSONObject((obj.getJSONObject("Temperature")).toString());
+//        } catch( JSONException e){
+//            e.printStackTrace();
+//        }
+//        if(obj != null && temp != null){
+//            try {
+//                accuW.maxTemp = temp.getString("Value");
+//                accuW.code = obj.getString("IconPhrase");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        else{
+//            System.out.println("ACCUWEATHER : Can't get response from url !");
+//        }
+
         Weather accuW = new Weather();
-        JSONObject obj = null;
-        JSONObject temp = null;
-        try{
-            obj = new JSONObject(accuResult);
-            temp = new JSONObject((obj.getJSONObject("Temperature")).toString());
-        } catch( JSONException e){
-            e.printStackTrace();
-        }
-        if(obj != null && temp != null){
-            try {
-                accuW.maxTemp = temp.getString("Value");
-                accuW.code = obj.getString("IconPhrase");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        else{
-            System.out.println("ACCUWEATHER : Can't get response from url !");
-        }
 
         String forecaResult = ForecaNetworkUtils.getCurrent(AppState.getInstance().getLongitude(), AppState.getInstance().getLatitude());
 //      System.out.println("AppState: "+AppState.getInstance().getLatitude());
@@ -96,7 +98,7 @@ public class CalculateParams {
             }
 
         }
-//        System.out.println("Calculate foreca: "+forecaResult+"\n object: "+obj1);
+        System.out.println("Calculate foreca: "+forecaResult+"\n object: "+obj1);
 
         URL url = VisualCrosingNetworkUtils.buildForCurrent(AppState.getInstance().getLatitude(),AppState.getInstance().getLongitude());
         String visualCrossingResult=null;
@@ -105,7 +107,7 @@ public class CalculateParams {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        System.out.println("AppState: "+AppState.getInstance().getLatitude());
+        System.out.println("AppState: "+AppState.getInstance().getLatitude());
 
 //              System.out.println("Calculate visual: "+visualCrossingResult);
 
@@ -133,6 +135,7 @@ public class CalculateParams {
 
             }
         }
+        accuW = foreca;
         double temperature = calculateTemperature(foreca, visualCrossing, accuW);
 
         String code = compareCodes(accuW,foreca, visualCrossing);

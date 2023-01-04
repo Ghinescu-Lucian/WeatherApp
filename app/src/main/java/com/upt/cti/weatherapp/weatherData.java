@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class weatherData {
 
-    public String mTemperature,micon,mcity,mWeatherType;
+    public String mTemperature,micon,mcity,mWeatherType, code;
     private int mCondition;
 
     public static weatherData fromJson(JSONObject jsonObject)
@@ -89,6 +89,31 @@ public class weatherData {
         return "dunno";
 
 
+    }
+
+    public void setMicon(String s){
+        if( s.contains("overcast")) micon=  "overcast";
+        else if( s.contains("clear")) micon = "sunny";
+        else if( s.contains("cloudy")) micon = "cloudy";
+        else if( s.contains("snow")) micon = "snow1";
+        else if( s.contains("shower")) micon = "shower";
+        else if( s.contains("thunderstorm")) micon = "thunderstrom1";
+        else micon="dunno";
+
+
+
+    }
+
+    @Override
+    public String toString() {
+        return "weatherData{" +
+                "mTemperature='" + mTemperature + '\'' +
+                ", micon='" + micon + '\'' +
+                ", mcity='" + mcity + '\'' +
+                ", mWeatherType='" + mWeatherType + '\'' +
+                ", code='" + code + '\'' +
+                ", mCondition=" + mCondition +
+                '}';
     }
 
     public String getmTemperature() {
