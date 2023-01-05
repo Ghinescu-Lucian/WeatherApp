@@ -147,6 +147,7 @@ public class CurrentWeather extends AppCompatActivity {
         temperature.setText(weather.getmTemperature());
         city.setText(weather.getMcity());
         condition.setText(weather.getmWeatherType());
+        System.out.println("Icon: "+weather.getMicon());
         int resourceID=getResources().getIdentifier(weather.getMicon(),"drawable",getPackageName());
         image.setImageResource(resourceID);
 
@@ -230,7 +231,7 @@ public class CurrentWeather extends AppCompatActivity {
 //            URL weatherUrl = urls[0];
             String weatherSearchResults = null;
             ForecaNetworkUtils.getLocation(AppState.getInstance().getLongitude(), AppState.getInstance().getLatitude());
-            CalculateParams c = new CalculateParams();
+            CalculateParams c = new CalculateParams(appState.getAccWeight(),appState.getForWeight(),appState.getVisWeight());
 //            c.retrieveCurrentData();
             c.retrieveCurrentData();
             Weather d = c.getCurrentWeather();
@@ -238,6 +239,7 @@ public class CurrentWeather extends AppCompatActivity {
             currentWeather = d;
             weatherData wd = new weatherData();
             wd.setMicon(d.getCode());
+            System.out.println("Code: "+d.code);
             wd.mcity = appState.getCity();
             String str = d.getCode();
             String res = str.substring(0, 1).toUpperCase() + str.substring(1);

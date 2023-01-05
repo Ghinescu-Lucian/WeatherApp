@@ -20,70 +20,72 @@ import java.util.Locale;
 
 
 public class CalculateParams {
-//    private Weather CurrentAccuWeather, CurrentForeca, CurrentVisualCrossing;
-//    private ArrayList<Weather> HourlyAccuWeather, HourlyForeca, HourlyVisualCrossing;
-//    private ArrayList<Weather> DailyAccuWeather, DailyForeca, DailyVisulaCrossing;
 
     private Weather Current;
     private ArrayList<Weather> Hourly;
     private ArrayList<Weather> Daily;
 
-    public CalculateParams(){
+    private double accuWeight, forecaWeight, visualWeight;
+
+    public CalculateParams(int accuWeight, int forecaWeight, int visualWeight){
         Current = new Weather();
         Hourly = new ArrayList<Weather>();
         Daily = new ArrayList<Weather>() ;
+        this.accuWeight = accuWeight;
+        this.forecaWeight = forecaWeight;
+        this.visualWeight = visualWeight;
     }
 
     public void retrieveCurrentData(){
 
-       AccuWeatherNetworkUtils.addLocationKey("290867");
-       AppState.getInstance().setLocationKey("290867");
-//        URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(AppState.getInstance().getCity());
-//        String response=null;
-//        try {
-//            response = AccuWeatherNetworkUtils.getResponseFromHttpUrl(locationUrl);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            JSONArray ar = new JSONArray(response);
-//            JSONObject obj = ar.getJSONObject(0);
-//            String key = obj.getString("Key");
-//            System.out.println("AccuWeather: Location key: "+key);
-//            AccuWeatherNetworkUtils.addLocationKey(key);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        URL urlAcc = AccuWeatherNetworkUtils.buildUrlForWeatherCurrent();
-//       String accuResult=null;
-//        try {
-//             accuResult = AccuWeatherNetworkUtils.getResponseFromHttpUrl(urlAcc);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        accuResult = accuResult.substring(1, accuResult.length()-1);
-//        Weather accuW = new Weather();
-//        JSONObject obj = null;
-//        JSONObject temp = null;
-//        try{
-//            obj = new JSONObject(accuResult);
-//            temp = new JSONObject((obj.getJSONObject("Temperature")).toString());
-//        } catch( JSONException e){
-//            e.printStackTrace();
-//        }
-//        if(obj != null && temp != null){
-//            try {
-//                accuW.maxTemp = temp.getString("Value");
-//                accuW.code = obj.getString("IconPhrase");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        else{
-//            System.out.println("ACCUWEATHER : Can't get response from url !");
-//        }
-
+//       AccuWeatherNetworkUtils.addLocationKey("290867");
+//       AppState.getInstance().setLocationKey("290867");
+        URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(AppState.getInstance().getCity());
+        String response=null;
+        try {
+            response = AccuWeatherNetworkUtils.getResponseFromHttpUrl(locationUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONArray ar = new JSONArray(response);
+            JSONObject obj = ar.getJSONObject(0);
+            String key = obj.getString("Key");
+            System.out.println("AccuWeather: Location key: "+key);
+            AccuWeatherNetworkUtils.addLocationKey(key);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        URL urlAcc = AccuWeatherNetworkUtils.buildUrlForWeatherCurrent();
+       String accuResult=null;
+        try {
+             accuResult = AccuWeatherNetworkUtils.getResponseFromHttpUrl(urlAcc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        accuResult = accuResult.substring(1, accuResult.length()-1);
         Weather accuW = new Weather();
+        JSONObject obj = null;
+        JSONObject temp = null;
+        try{
+            obj = new JSONObject(accuResult);
+            temp = new JSONObject((obj.getJSONObject("Temperature")).toString());
+        } catch( JSONException e){
+            e.printStackTrace();
+        }
+        if(obj != null && temp != null){
+            try {
+                accuW.maxTemp = temp.getString("Value");
+                accuW.code = obj.getString("IconPhrase");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            System.out.println("ACCUWEATHER : Can't get response from url !");
+        }
+
+//        Weather accuW = new Weather();
 
         String forecaResult = ForecaNetworkUtils.getCurrent(AppState.getInstance().getLongitude(), AppState.getInstance().getLatitude());
 //      System.out.println("AppState: "+AppState.getInstance().getLatitude());
@@ -109,14 +111,15 @@ public class CalculateParams {
 
         URL url = VisualCrosingNetworkUtils.buildForCurrent(AppState.getInstance().getLatitude(),AppState.getInstance().getLongitude());
         String visualCrossingResult=null;
+        System.out.println("VisualCrossing: "+url);
         try {
             visualCrossingResult = VisualCrosingNetworkUtils.getResponseFromHttpUrl(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("AppState: "+AppState.getInstance().getLatitude());
+//        System.out.println("AppState: "+AppState.getInstance().getLatitude());
 
-//              System.out.println("Calculate visual: "+visualCrossingResult);
+              System.out.println("Calculate visual: "+visualCrossingResult);
 
         Weather visualCrossing = new Weather();
         JSONObject obj2 = null;
@@ -142,10 +145,13 @@ public class CalculateParams {
 
             }
         }
-        accuW = foreca;
+
+
+
+//        accuW = foreca;
         double temperature = calculateTemperature(foreca, visualCrossing, accuW);
 
-        String code = compareCodes(accuW,foreca, visualCrossing);
+        String code = compareCodes(visualCrossing,foreca,accuW);
 
         Current = new Weather();
         Current.setMaxTemp(String.valueOf(temperature));
@@ -161,21 +167,21 @@ public class CalculateParams {
 
         if(AppState.getInstance().getLocationKey()==null) {
 
-//        URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(AppState.getInstance().getCity());
-//        String response=null;
-//        try {
-//            response = AccuWeatherNetworkUtils.getResponseFromHttpUrl(locationUrl);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//             JSONArray ar = new JSONArray(response);
-//            JSONObject obj = ar.getJSONObject(0);
-//            String key = obj.getString("Key");
-//            AccuWeatherNetworkUtils.addLocationKey(key);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+            URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(AppState.getInstance().getCity());
+            String response=null;
+            try {
+                response = AccuWeatherNetworkUtils.getResponseFromHttpUrl(locationUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                 JSONArray ar = new JSONArray(response);
+                JSONObject obj = ar.getJSONObject(0);
+                String key = obj.getString("Key");
+                AccuWeatherNetworkUtils.addLocationKey(key);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         else {
@@ -184,33 +190,33 @@ public class CalculateParams {
 
         }
 
-//        URL urlAcc = AccuWeatherNetworkUtils.buildUrlForWeatherHourly();
-//        String accuResult=null;
-//        try {
-//            accuResult = AccuWeatherNetworkUtils.getResponseFromHttpUrl(urlAcc);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("AccuWeather: "+accuResult+"\n");
-//
-//        JSONArray obja = null;
+        URL urlAcc = AccuWeatherNetworkUtils.buildUrlForWeatherHourly();
+        String accuResult=null;
+        try {
+            accuResult = AccuWeatherNetworkUtils.getResponseFromHttpUrl(urlAcc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("AccuWeather: "+accuResult+"\n");
+
+        JSONArray obja = null;
         ArrayList<Weather> accu = new ArrayList<>();
 
-//        try {
-//            obja = new JSONArray(accuResult);
-//            for( int i =0 ; i < obja.length();i++){
-//                Weather a = new Weather();
-//                JSONObject resultObj = obja.getJSONObject(i);
-//                a.setCode((resultObj.getString("IconPhrase")).toLowerCase());
-//                JSONObject aju = resultObj.getJSONObject("Temperature");
-//                a.setMaxTemp(aju.getString("Value"));
-//                a.setDate(resultObj.getString("DateTime"));
-//                accu.add(a);
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
+        try {
+            obja = new JSONArray(accuResult);
+            for( int i =0 ; i < obja.length();i++){
+                Weather a = new Weather();
+                JSONObject resultObj = obja.getJSONObject(i);
+                a.setCode((resultObj.getString("IconPhrase")).toLowerCase());
+                JSONObject aju = resultObj.getJSONObject("Temperature");
+                a.setMaxTemp(aju.getString("Value"));
+                a.setDate(resultObj.getString("DateTime"));
+                accu.add(a);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 //        System.out.println("AccuweatherHourly: "+accu.size());
 
 // merge totul
@@ -240,7 +246,7 @@ public class CalculateParams {
         }
 
         System.out.println("ForecaHourly: "+foreca.size());
-        accu = foreca;
+//        accu = foreca;
 
 
         URL url = VisualCrosingNetworkUtils.buildForHourly(AppState.getInstance().getLatitude(),AppState.getInstance().getLongitude());
@@ -299,7 +305,7 @@ public class CalculateParams {
         int i;
         for(i=0; i<12; i++){
             Weather aju = new Weather();
-            double t =calculateTemperature(visualCrossing.get(i),foreca.get(i),accu.get(i));
+            double t =calculateTemperature(foreca.get(i),visualCrossing.get(i),accu.get(i));
             aju.setMaxTemp(String.valueOf(t));
             aju.setCode(compareCodes(visualCrossing.get(i),foreca.get(i),accu.get(i)));
             aju.setDate(accu.get(i).getDate());
@@ -321,62 +327,62 @@ public class CalculateParams {
     public void retrieveDailyData() {
 
 
-//        if(AppState.getInstance().getLocationKey()==null) {
-//
-//            URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(AppState.getInstance().getCity());
-//            String response = null;
-//            try {
-//                response = AccuWeatherNetworkUtils.getResponseFromHttpUrl(locationUrl);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-////            response = response.substring(1, response.length() - 1);
-//            try {
-//                JSONArray ar = new JSONArray(response);
-//                JSONObject obj = ar.getJSONObject(0);
-//                String key = obj.getString("Key");
-//                AccuWeatherNetworkUtils.addLocationKey(key);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        else {
-//            System.out.println("ACCUWEATHER: "+AppState.getInstance().getLocationKey());
-//            AccuWeatherNetworkUtils.addLocationKey(AppState.getInstance().getLocationKey());
-//        }
-//        URL urlAcc = AccuWeatherNetworkUtils.buildUrlForWeatherDaily();
-//        String accuResult=null;
-//        try {
-//            accuResult = AccuWeatherNetworkUtils.getResponseFromHttpUrl(urlAcc);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-////        System.out.println("AccuWeather: "+accuResult+"\n");
-//        JSONObject o = null;
-//        JSONArray obja = null;
+        if(AppState.getInstance().getLocationKey()==null) {
+
+            URL locationUrl = AccuWeatherNetworkUtils.buildUrlForLocation(AppState.getInstance().getCity());
+            String response = null;
+            try {
+                response = AccuWeatherNetworkUtils.getResponseFromHttpUrl(locationUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            response = response.substring(1, response.length() - 1);
+            try {
+                JSONArray ar = new JSONArray(response);
+                JSONObject obj = ar.getJSONObject(0);
+                String key = obj.getString("Key");
+                AccuWeatherNetworkUtils.addLocationKey(key);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("ACCUWEATHER: "+AppState.getInstance().getLocationKey());
+            AccuWeatherNetworkUtils.addLocationKey(AppState.getInstance().getLocationKey());
+        }
+        URL urlAcc = AccuWeatherNetworkUtils.buildUrlForWeatherDaily();
+        String accuResult=null;
+        try {
+            accuResult = AccuWeatherNetworkUtils.getResponseFromHttpUrl(urlAcc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        System.out.println("AccuWeather: "+accuResult+"\n");
+        JSONObject o = null;
+        JSONArray obja = null;
         ArrayList<Weather> accu = new ArrayList<>();
 
-//        try {
-//            o = new JSONObject(accuResult);
-//            obja = o.getJSONArray("DailyForecasts");
-//            for( int i =0 ; i < obja.length();i++){
-//                Weather a = new Weather();
-//
-//                JSONObject resultObj = obja.getJSONObject(i);
-//                JSONObject r1 = resultObj.getJSONObject("Temperature");
-//                JSONObject r2 = resultObj.getJSONObject("Day");
-//
-//                a.setCode((r2.getString("IconPhrase")).toLowerCase());
-//                JSONObject aju = r1.getJSONObject("Maximum");
-//                a.setMaxTemp(aju.getString("Value"));
-//                aju = r1.getJSONObject("Minimum");
-//                a.setMinTemp(aju.getString("Value"));
-//                accu.add(a);
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
+        try {
+            o = new JSONObject(accuResult);
+            obja = o.getJSONArray("DailyForecasts");
+            for( int i =0 ; i < obja.length();i++){
+                Weather a = new Weather();
+
+                JSONObject resultObj = obja.getJSONObject(i);
+                JSONObject r1 = resultObj.getJSONObject("Temperature");
+                JSONObject r2 = resultObj.getJSONObject("Day");
+
+                a.setCode((r2.getString("IconPhrase")).toLowerCase());
+                JSONObject aju = r1.getJSONObject("Maximum");
+                a.setMaxTemp(aju.getString("Value"));
+                aju = r1.getJSONObject("Minimum");
+                a.setMinTemp(aju.getString("Value"));
+                accu.add(a);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 //        System.out.println("AccuweatherDailly: "+accu.size());
 
 // merge totul
@@ -441,11 +447,11 @@ public class CalculateParams {
         }
 
         System.out.println("VisualCrossing :"+visualCrossing.size());
-        accu = foreca;
+//        accu = foreca;
         int i;
         for(i=0; i<5; i++){
             Weather aju = new Weather();
-            double t =calculateTemperature(visualCrossing.get(i),foreca.get(i),accu.get(i));
+            double t =calculateTemperature(foreca.get(i),visualCrossing.get(i),accu.get(i));
             aju.setMaxTemp(String.valueOf(t));
 
             t = Double.parseDouble(visualCrossing.get(i).getMinTemp()) + Double.parseDouble(foreca.get(i).getMinTemp()) + Double.parseDouble(accu.get(i).getMinTemp());
@@ -481,28 +487,57 @@ public class CalculateParams {
     }
 
     public String compareCodes(Weather a, Weather b, Weather c) {
-        int clear = 0, cloudy = 0, sunny = 0, snow = 0, shower = 0, overcast = 0, thunderstrom = 0;
+        double clear = 0, cloudy = 0, sunny = 0, snow = 0, shower = 0, overcast = 0, thunderstorm = 0, fog =0;
 
         String acc = c.getCode();
-        String fr = a.getCode();
-        String vis = b.getCode();
-        if (fr.contains("cloudy") || fr.contains("cloud") || vis.contains("cloud") || vis.contains("cloudy")
-                || acc.contains("cloudy") || acc.contains("cloud"))
-            cloudy++;
-        if (fr.contains("clear") || vis.contains("clear") || acc.contains("clear")) clear++;
-        if (fr.contains("sunny") || vis.contains("sunny") || acc.contains("sunny")) sunny++;
-        if (fr.contains("snow") || vis.contains("snow") || acc.contains("snow")) snow++;
-        if (fr.contains("shower") || vis.contains("shower") || acc.contains("shower")) cloudy++;
-        if (fr.contains("overcast") || vis.contains("overcast") || acc.contains("overcast"))
-            overcast++;
-        if (fr.contains("thunderstorm") || vis.contains("thunderstorm") || acc.contains("thunderstorm"))
-            thunderstrom++;
+        String fr = b.getCode();
+        String vis = a.getCode();
+
+
+
+        
+        double scoreVs = 1*visualWeight;
+        double scoreFr = 1*forecaWeight;
+        double scoreAc = 1*accuWeight;
+
+        
+        if (fr.contains("cloudy") || fr.contains("cloud")) cloudy+= scoreFr;
+        if (fr.contains("clear") ) clear+= scoreFr;
+        if (fr.contains("sunny") ) sunny+= scoreFr;
+        if (fr.contains("snow") ) snow+= scoreFr;;
+        if (fr.contains("shower") || fr.contains("rain")) shower+= scoreFr;
+        if (fr.contains("overcast") ) overcast+= scoreFr;
+        if (fr.contains("thunderstorm") ) thunderstorm+= scoreFr;
+        if (fr.contains("fog") ) fog+= scoreFr;
+
+        if (vis.contains("cloudy") || vis.contains("cloud")) cloudy+= scoreVs;
+        if (vis.contains("clear") ) clear+= scoreVs;
+        if (vis.contains("sunny") ) sunny+= scoreVs;
+        if (vis.contains("snow") ) snow+= scoreVs;;
+        if (vis.contains("shower") || vis.contains("rain") ) shower+= scoreVs;
+        if (vis.contains("overcast") ) overcast+= scoreVs;
+        if (vis.contains("thunderstorm") ) thunderstorm+= scoreVs;
+        if (vis.contains("fog") ) fog+= scoreVs;
+
+
+
+        if (acc.contains("cloudy") || acc.contains("cloud")) cloudy+= scoreAc;
+        if (acc.contains("clear") ) clear+= scoreAc;
+        if (acc.contains("sunny") ) sunny+= scoreAc;
+        if (acc.contains("snow") ) snow+= scoreAc;;
+        if (acc.contains("shower") || acc.contains("rain") ) shower+= scoreAc;
+        if (acc.contains("overcast") ) overcast+= scoreAc;
+        if (acc.contains("thunderstorm") ) thunderstorm+= scoreAc;
+        if (acc.contains("fog") ) fog+= scoreAc;
+
+
 
         String code = a.getCode();
-        int max = 0;
+
+        double max = 0;
         if (clear > max) {
             code = "clear";
-            max = cloudy;
+            max = clear;
         }
         if (cloudy > max) {
             code = "cloudy";
@@ -514,27 +549,31 @@ public class CalculateParams {
         }
         if (snow > max) {
             code = "snow";
-            max = cloudy;
+            max = snow;
         }
         if (shower > max) {
             code = "shower";
-            max = cloudy;
+            max = shower;
         }
         if (overcast > max) {
             code = "overcast";
-            max = cloudy;
+            max = overcast;
         }
-        if (thunderstrom > max) {
+        if (thunderstorm > max) {
             code = "thunderstorm";
-            max = cloudy;
+            max = thunderstorm;
         }
-
+        if (fog > max) {
+            code = "fog";
+            max = fog;
+        }
+        System.out.println("Code compare: "+code+" "+max);
         return code;
     }
 
     public double calculateTemperature(Weather a, Weather b, Weather c){
-        double temperature = parseDouble(a.getMaxTemp()) + parseDouble(b.getMaxTemp()) + parseDouble(b.getMaxTemp());
-        temperature = temperature/3;
+        double temperature = parseDouble(a.getMaxTemp())*forecaWeight + parseDouble(b.getMaxTemp())*visualWeight + parseDouble(b.getMaxTemp())*accuWeight;
+        temperature = temperature/(forecaWeight+visualWeight+accuWeight);
         temperature = Math.round(temperature);
 //        System.out.println("Am calculat media: "+temperature+"\n "+ b.getMaxTemp()+" + "+b.getMaxTemp()+ " + "+c.getMaxTemp()
 //                +"\n "+a.getCode()+ "\n "+b.getCode()

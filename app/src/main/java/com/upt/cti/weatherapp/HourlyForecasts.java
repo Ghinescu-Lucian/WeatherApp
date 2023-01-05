@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class HourlyForecasts extends AppCompatActivity {
         daily = findViewById(R.id.dailyw);
         listView = findViewById(R.id.listView);
         city = findViewById(R.id.cityHourly);
+
 
         apstate = AppState.getInstance();
 
@@ -73,10 +75,11 @@ public class HourlyForecasts extends AppCompatActivity {
 
         @Override
         protected String doInBackground(URL... urls) {
-//                System.out.println("Am ajuns aici!");
-//            ForecaNetworkUtils.getLocation(AppState.getInstance().getLongitude(), AppState.getInstance().getLatitude());
-            CalculateParams c = new CalculateParams();
-//            c.retrieveCurrentData();
+            int acc = AppState.getInstance().getAccWeight();
+            int foc = AppState.getInstance().getForWeight();
+            int vis = AppState.getInstance().getVisWeight();
+            CalculateParams c = new CalculateParams(acc,foc,vis);
+
             c.retrieveHourlyData();
             ArrayList<Weather> d = c.getHourlyWeather();
 

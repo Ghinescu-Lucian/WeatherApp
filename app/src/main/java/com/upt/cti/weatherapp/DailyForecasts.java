@@ -75,7 +75,10 @@ public class DailyForecasts extends AppCompatActivity {
         protected String doInBackground(URL... urls) {
 //                System.out.println("Am ajuns aici!");
 //            ForecaNetworkUtils.getLocation(AppState.getInstance().getLongitude(), AppState.getInstance().getLatitude());
-            CalculateParams c = new CalculateParams();
+            int acc = AppState.getInstance().getAccWeight();
+            int foc = AppState.getInstance().getForWeight();
+            int vis = AppState.getInstance().getVisWeight();
+            CalculateParams c = new CalculateParams(acc,foc,vis);
 //            c.retrieveCurrentData();
             c.retrieveDailyData();
             ArrayList<Weather> d = c.getDailyWeather();

@@ -96,8 +96,9 @@ public class weatherData {
         else if( s.contains("clear")) micon = "sunny";
         else if( s.contains("cloudy")) micon = "cloudy";
         else if( s.contains("snow")) micon = "snow1";
-        else if( s.contains("shower")) micon = "shower";
-        else if( s.contains("thunderstorm")) micon = "thunderstrom1";
+        else if( s.contains("shower")) micon = "lightrain";
+        else if( s.contains("thunderstorm")) micon = "thunderstorm2";
+        else if( s.contains("fog")) micon = "fog";
         else micon="dunno";
 
 

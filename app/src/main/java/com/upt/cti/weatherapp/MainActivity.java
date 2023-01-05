@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         NameofCity = findViewById(R.id.cityName);
 
         locationService = new LocationService(this);
-        calculator = new CalculateParams();
+        calculator = new CalculateParams(1,1,1);
         currentWeather = new Weather();
 
         mCityFinder.setOnClickListener(new View.OnClickListener() {
@@ -379,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
 //            URL weatherUrl = urls[0];
             String weatherSearchResults = null;
             ForecaNetworkUtils.getLocation(AppState.getInstance().getLongitude(), AppState.getInstance().getLatitude());
-            CalculateParams c = new CalculateParams();
+            CalculateParams c = new CalculateParams(1,1,1);
 //            c.retrieveCurrentData();
             c.retrieveDailyData();
             Weather d = c.getCurrentWeather();

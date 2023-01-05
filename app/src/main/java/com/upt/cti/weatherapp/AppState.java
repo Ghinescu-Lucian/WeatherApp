@@ -13,6 +13,7 @@ class AppState {
     private static double latitude;
     private static String city;
 
+    private static int accWeight=1,forWeight=1, visWeight=1;
     private static String locationKey;
 
     public static boolean isReady=false;
@@ -47,6 +48,11 @@ class AppState {
         this.latitude=latitude;
   }
 
+  public void setAccWeight(int weight){ this.accWeight=weight; }
+  public void setForWeight(int weight){ this.forWeight=weight; }
+  public void setVisWeight(int weight){ this.visWeight=weight; }
+
+
   public void setLocationKey(String key){ this.locationKey = key;}
 
   public void setCity(String city){
@@ -65,6 +71,10 @@ class AppState {
   public double getLongitude(){ return this.longitude;}
 
   public double getLatitude(){ return this.latitude;}
+
+  public int getAccWeight(){ return this.accWeight;}
+  public int getForWeight(){ return this.forWeight;}
+  public int getVisWeight(){ return this.visWeight;}
 
   public String getLocationKey(){return this.locationKey;}
 
