@@ -1,82 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#242343"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/priosources"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="30dp"
+        android:text="Prioritization of sources"
+        android:textColor="#ffffff"
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#242343"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/priosources"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="30dp"
-            android:text="Prioritization of sources"
-            android:textColor="#ffffff"
-            android:textSize="35sp" />
-
-        <TextView
-            android:id="@+id/space"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="."
-            android:textSize="34sp" />
-
-        <TextView
-            android:id="@+id/s1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Source 1:"
-            android:textColor="#ffffff"
-            android:textSize="34sp" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-        <TextView
-            android:id="@+id/s2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Source 2:"
-            android:textColor="#ffffff"
-            android:textSize="34sp" />
-
-        <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-        <TextView
-            android:id="@+id/s3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Source 3:"
-            android:textColor="#ffffff"
-            android:textSize="34sp" />
-
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-        <TextView
-            android:id="@+id/spacee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="."
-            android:textSize="34sp" />
-
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/buttondesign"
-            android:text="Save"
-            android:textSize="48sp" />
+            android:text="Map"
+            android:textSize="28sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+            <TextView
+                android:id="@+id/space"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Order the sources "
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="#ffffff"
+                android:textSize="28sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Weight"
+                android:layout_marginLeft="10dp"
+                android:textColor="#ffffff"
+                android:textSize="28sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/s1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:text="Source 1:"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/weight1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:hint="      "
+                android:inputType="number"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/s2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:text="Source 2:"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_weight="1" />
+            <EditText
+                android:id="@+id/weight2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:hint="      "
+                android:inputType="number"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/s3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:text="Source 3:"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/spinner3"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_alignRight="@id/s3"
+                android:layout_weight="1" />
+            <EditText
+                android:id="@+id/weight3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:hint="      "
+                android:inputType="number"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+            <Button
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/buttondesign"
+                android:layout_marginTop="40dp"
+                android:text="Save"
+                android:textSize="32sp" />
     </LinearLayout>
 </RelativeLayout>

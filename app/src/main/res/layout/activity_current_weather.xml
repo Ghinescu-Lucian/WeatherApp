@@ -7,7 +7,7 @@
     android:background="#242343">
 
     <TextView
-        android:id="@+id/currentweather"
+        android:id="@+id/currentWeatherT"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
@@ -15,7 +15,9 @@
         android:text="Current Weather"
         android:textColor="#E4E1E1"
         android:textSize="40sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:clickable="true"
+        />
 
     <ImageView
         android:id="@+id/imageView0"

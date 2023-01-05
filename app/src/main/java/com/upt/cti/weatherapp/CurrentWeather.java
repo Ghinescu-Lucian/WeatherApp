@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +35,7 @@ public class CurrentWeather extends AppCompatActivity {
     private Button days;
     private Button hours;
     private AppState appState;
+    private TextView title;
 
     private Weather currentWeather;
     RelativeLayout mCityFinder;
@@ -59,6 +61,7 @@ public class CurrentWeather extends AppCompatActivity {
         hours = findViewById(R.id.hourlyweather);
         appState = AppState.getInstance();
         mCityFinder = findViewById(R.id.cityFinderO);
+        title = findViewById(R.id.currentWeatherT);
         LocationService ls = new LocationService();
 
         mCityFinder.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +86,15 @@ public class CurrentWeather extends AppCompatActivity {
             }
         });
 
+//        title.setText("CEVA");
+       title.setOnLongClickListener(new View.OnLongClickListener() {
+           @Override
+           public boolean onLongClick(View view) {
+               Intent intent = new Intent(CurrentWeather.this, LoginActivity.class);
+               startActivity(intent);
+               return false;
+           }
+       });
 
     }
 

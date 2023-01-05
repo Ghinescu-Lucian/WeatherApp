@@ -5,38 +5,60 @@
     android:background="#242343">
 
     <EditText
-        android:id="@+id/user"
+        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:background="#EAEBEF"
         android:ems="10"
+        android:hint="Email"
         android:inputType="textPersonName"
-        android:text="User"
-        android:textColor="#ffffff"
+        android:textColor="#3F53D3"
         android:textSize="24sp" />
 
     <EditText
         android:id="@+id/passw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user"
+        android:layout_below="@id/email"
         android:layout_centerInParent="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Password"
-        android:textColor="#ffffff"
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:textColor="#3F53D3"
+        android:background="#EAEBEF"
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/passw"
         android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
         android:background="@drawable/buttondesign"
         android:text="Log in"
         android:textColor="#ffffff"
         android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Hello,\n     Admin!"
+        android:textSize="32dp"
+        android:textColor="@color/white"
+        />
+
+
+
+
 </RelativeLayout>

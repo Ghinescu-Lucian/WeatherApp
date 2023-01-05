@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.upt.cti.weatherapp.databinding.ActivityMapsBinding;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,6 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     List<Address> addresses = null;
+    private ArrayList<LatLng> allPoints;
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -41,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        allPoints = new ArrayList<>();
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -49,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     /**
@@ -64,6 +68,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng point) {
+                allPoints.add(point);
+                mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(point));
+                AppState.getInstance().setLatitude(point.latitude);
+                AppState.getInstance().setLongitude(point.longitude);
+            }
+        });
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
@@ -72,37 +87,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getLastLocation() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation()
-                    .addOnSuccessListener(new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
-
-                                try {
-                                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                    System.out.println("Latitude: " + addresses.get(0).getLatitude());
-                                    System.out.println("Longitude: " + addresses.get(0).getLongitude());
-                                    System.out.println("Address: " + addresses.get(0).getAddressLine(0));
-                                    System.out.println("City: " + addresses.get(0).getLocality());
-                                    System.out.println("Country: " + addresses.get(0).getCountryName());
-                                    // Add a marker in Sydney and move the camera
-                                    LatLng sydney = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-                                    mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,9));
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                            }
-                        }
-                    });
-        } else {
-            askPermission();
-        }
+        LatLng sydney = new LatLng(AppState.getInstance().getLatitude(), AppState.getInstance().getLongitude());
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,9));
     }
 
     private void askPermission() {
