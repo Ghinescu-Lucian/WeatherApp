@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/imageView0"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginTop="80dp"
         app:srcCompat="@drawable/finding" />
 
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/imageView0"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="230dp"
         android:paddingStart="30sp"
         android:text="Fetching___"
         android:textColor="#F1EEEE"

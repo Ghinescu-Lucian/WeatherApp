@@ -1,5 +1,7 @@
 package com.upt.cti.weatherapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -14,6 +16,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,8 +24,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.type.LatLng;
+
+import org.checkerframework.checker.units.qual.A;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,10 +55,10 @@ public class CurrentWeather extends AppCompatActivity {
     private TextView title;
 
     private Weather currentWeather;
-    RelativeLayout mCityFinder;
+    private RelativeLayout mCityFinder;
 
-
-
+    private DatabaseReference ref = AppState.database.getReference();
+    private final ArrayList<LocationWeights> points = new ArrayList<>();
 
 
     String Location_Provider = LocationManager.GPS_PROVIDER;
@@ -63,6 +80,52 @@ public class CurrentWeather extends AppCompatActivity {
         mCityFinder = findViewById(R.id.cityFinderO);
         title = findViewById(R.id.currentWeatherT);
         LocationService ls = new LocationService();
+
+//        System.out.println("CEVA:"+ref.child("Points").get().getResult().toString());
+
+
+//
+//        ref.child("Points").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                LocationWeights lw = snapshot.getValue(LocationWeights.class);
+//                 points.add(lw);
+//                System.out.println("Data: "+lw.AdminUID);
+//                getLocationWeights();
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                LocationWeights lw = snapshot.getValue(LocationWeights.class);
+//                if(points.contains(lw))
+//                    points.set(points.indexOf(lw),lw);
+//                else
+//                    points.add(lw);
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//                try{
+//                    LocationWeights lw = snapshot.getValue(LocationWeights.class);
+//                    points.remove(lw);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         mCityFinder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,9 +166,37 @@ public class CurrentWeather extends AppCompatActivity {
         super.onResume();
         Intent mIntent=getIntent();
         String city= mIntent.getStringExtra("City");
-        System.out.println("City: "+city);
-        if(city==null)
-            getCurrentLocation();
+        System.out.println("Points: "+points.size());
+        if(city==null){
+            ref.child("Points").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        Log.d("firebase::", String.valueOf(task.getResult().getValue()));
+                        System.out.println("Firebase: "+ task.getResult());
+
+                        DataSnapshot snapshot;
+                        LocationWeights lw;
+                        Iterator<DataSnapshot> ds = task.getResult().getChildren().iterator();
+                        while(ds.hasNext()){
+                            lw = ds.next().getValue(LocationWeights.class);
+                            points.add(lw);
+
+                        }
+                        System.out.println("Points> "+ points.size());
+                        getLocationWeights();
+//                    System.out.println("Firebase: "+ task.getResult().getChildren().iterator().next());
+                        getCurrentLocation();
+                    }
+                }
+            });
+
+
+        }
+
         else{
            System.out.println("New City: "+city);
             Geocoder geocoder = new Geocoder(this);
@@ -180,7 +271,8 @@ public class CurrentWeather extends AppCompatActivity {
                     String cityName = addresses.get(0).getLocality();
                     System.out.println("City: "+cityName);
                     AppState.getInstance().setCity(cityName);
-                    System.out.println("Oras: "+cityName);
+
+                    System.out.println("Points: "+points.size());
 
 
                     new CurrentWeather.FetchCalculateCurrent().execute();
@@ -232,6 +324,7 @@ public class CurrentWeather extends AppCompatActivity {
             String weatherSearchResults = null;
             ForecaNetworkUtils.getLocation(AppState.getInstance().getLongitude(), AppState.getInstance().getLatitude());
             CalculateParams c = new CalculateParams(appState.getAccWeight(),appState.getForWeight(),appState.getVisWeight());
+//            CalculateParams c = new CalculateParams(1, 1, 1);
 //            c.retrieveCurrentData();
             c.retrieveCurrentData();
             Weather d = c.getCurrentWeather();
@@ -245,7 +338,7 @@ public class CurrentWeather extends AppCompatActivity {
             String res = str.substring(0, 1).toUpperCase() + str.substring(1);
             wd.mWeatherType = res;
             wd.mTemperature = d.getMaxTemp();
-//    System.out.println("Result: "+d+"   "+wd);
+           //    System.out.println("Result: "+d+"   "+wd);
             runOnUiThread(new Runnable() {
 
                 @Override
@@ -265,6 +358,42 @@ public class CurrentWeather extends AppCompatActivity {
             System.out.println("PostExecute: "+weatherSearchResults);
             super.onPostExecute(weatherSearchResults);
         }
+    }
+
+    public void getLocationWeights(){
+
+        double actLat = AppState.getInstance().getLatitude();
+        double actLon = AppState.getInstance().getLongitude();
+
+        double cLat = points.get(0).getLatitude(), cLon = points.get(0).getLongitude();
+
+        double min = calculateDistance(actLat, actLon, cLat, cLon);
+        double x = calculateDistance(actLat, actLon,points.get(0).getLatitude(), points.get(0).getLongitude() );
+        int j=0;
+        int i;
+        for(i=1; i<points.size(); i++){
+            System.out.println("Points>< "+points.get(i).getLatitude()+ " "+points.get(i).getLongitude());
+            x = calculateDistance(actLat, actLon, points.get(i).getLatitude(), points.get(i).getLongitude());
+            if(x< min){
+                min =x;
+                j=i;
+            }
+        }
+        LocationWeights closest = points.get(j);
+        System.out.println("Closest: "+points.get(j).Latitude+" "+points.get(j).Longitude);
+        AppState.getInstance().setAccWeight(closest.AccuWeather);
+        AppState.getInstance().setForWeight(closest.Foreca);
+        AppState.getInstance().setVisWeight(closest.VisualCrossing);
+    }
+
+    public double calculateDistance( double xLat,double  xLon,double  yLat, double yLon){
+        double a = (xLat - yLat);
+        a = a*a;
+
+        double b = (xLon - yLon);
+        b=b*b;
+
+        return a+b;
     }
 
 

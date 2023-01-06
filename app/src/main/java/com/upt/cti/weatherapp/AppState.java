@@ -3,6 +3,9 @@ package com.upt.cti.weatherapp;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.Normalizer;
 
 class AppState {
@@ -16,10 +19,16 @@ class AppState {
     private static int accWeight=1,forWeight=1, visWeight=1;
     private static String locationKey;
 
+    private static FirebaseUser admin;
+
     public static boolean isReady=false;
+
+    final static FirebaseDatabase database = FirebaseDatabase.getInstance("https://weatherapp-372519-default-rtdb.europe-west1.firebasedatabase.app");
+//    DatabaseReference ref = database.getReference("server/saving-data/fireblog");
 
     // Declaring a variable of type String
     public String s;
+
 
     // Constructor
     // Here we will be creating private constructor
@@ -52,6 +61,8 @@ class AppState {
   public void setForWeight(int weight){ this.forWeight=weight; }
   public void setVisWeight(int weight){ this.visWeight=weight; }
 
+  public void setAdmnin(FirebaseUser usr){ this.admin=usr; }
+
 
   public void setLocationKey(String key){ this.locationKey = key;}
 
@@ -75,6 +86,8 @@ class AppState {
   public int getAccWeight(){ return this.accWeight;}
   public int getForWeight(){ return this.forWeight;}
   public int getVisWeight(){ return this.visWeight;}
+
+  public FirebaseUser getAdmin(){ return this.admin;}
 
   public String getLocationKey(){return this.locationKey;}
 

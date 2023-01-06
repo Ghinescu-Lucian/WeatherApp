@@ -13,9 +13,6 @@
 
             </item>
 
-            <item
-                android:drawable="@drawable/ic_arrow_up"
-                android:gravity="end"/>
 
         </layer-list>
 
