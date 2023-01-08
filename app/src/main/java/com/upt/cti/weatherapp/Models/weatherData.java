@@ -1,4 +1,4 @@
-package com.upt.cti.weatherapp;
+package com.upt.cti.weatherapp.Models;
 
 import org.json.JSONException;
 import org.json.JSONObject;

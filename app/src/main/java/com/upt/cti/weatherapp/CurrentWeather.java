@@ -1,7 +1,6 @@
 package com.upt.cti.weatherapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -22,19 +21,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.google.type.LatLng;
-
-import org.checkerframework.checker.units.qual.A;
-import org.json.JSONObject;
+import com.upt.cti.weatherapp.Models.LocationWeights;
+import com.upt.cti.weatherapp.Models.Weather;
+import com.upt.cti.weatherapp.Models.weatherData;
+import com.upt.cti.weatherapp.Network.ForecaNetworkUtils;
+import com.upt.cti.weatherapp.Services.CalculateParams;
+import com.upt.cti.weatherapp.Services.LocationService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -162,12 +159,18 @@ public class CurrentWeather extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Intent mIntent=getIntent();
         String city= mIntent.getStringExtra("City");
         System.out.println("Points: "+points.size());
-        if(city==null){
+        if(city==null ){
+//            System
             ref.child("Points").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -380,10 +383,10 @@ public class CurrentWeather extends AppCompatActivity {
             }
         }
         LocationWeights closest = points.get(j);
-        System.out.println("Closest: "+points.get(j).Latitude+" "+points.get(j).Longitude);
-        AppState.getInstance().setAccWeight(closest.AccuWeather);
-        AppState.getInstance().setForWeight(closest.Foreca);
-        AppState.getInstance().setVisWeight(closest.VisualCrossing);
+        System.out.println("Closest: "+points.get(j).getLatitude()+" "+points.get(j).getLongitude());
+        AppState.getInstance().setAccWeight((int)closest.getAccuWeather());
+        AppState.getInstance().setForWeight((int)closest.getForeca());
+        AppState.getInstance().setVisWeight((int)closest.getVisualCrossing());
     }
 
     public double calculateDistance( double xLat,double  xLon,double  yLat, double yLon){

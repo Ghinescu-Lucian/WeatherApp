@@ -1,4 +1,4 @@
-package com.upt.cti.weatherapp;
+package com.upt.cti.weatherapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
+import com.upt.cti.weatherapp.Models.Weather;
+import com.upt.cti.weatherapp.R;
+
 import java.util.List;
 
 /**

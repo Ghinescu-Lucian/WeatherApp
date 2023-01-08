@@ -80,7 +80,7 @@
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
 
-            <com.upt.cti.weatherapp.CustomSpinner
+            <com.upt.cti.weatherapp.CustomSpinnerC.CustomSpinner
                 android:id="@+id/spinner_sources1"
                 android:layout_width="180dp"
                 android:layout_height="40dp"
@@ -118,7 +118,7 @@
                 android:textColor="#ffffff"
                 android:textSize="18sp"/>
 
-            <com.upt.cti.weatherapp.CustomSpinner
+            <com.upt.cti.weatherapp.CustomSpinnerC.CustomSpinner
                 android:id="@+id/spinner_sources2"
                 android:layout_width="180dp"
                 android:layout_height="40dp"
@@ -154,7 +154,7 @@
                 android:textColor="#ffffff"
                 android:textSize="18sp"/>
 
-            <com.upt.cti.weatherapp.CustomSpinner
+            <com.upt.cti.weatherapp.CustomSpinnerC.CustomSpinner
                 android:id="@+id/spinner_sources3"
                 android:layout_width="185dp"
                 android:layout_height="40dp"

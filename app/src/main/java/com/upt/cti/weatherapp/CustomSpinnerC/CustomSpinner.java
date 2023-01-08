@@ -1,4 +1,4 @@
-package com.upt.cti.weatherapp;
+package com.upt.cti.weatherapp.CustomSpinnerC;
 
 import android.content.Context;
 import android.content.res.Resources;

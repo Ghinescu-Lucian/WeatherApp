@@ -5,10 +5,13 @@ import android.graphics.Bitmap;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.type.DateTime;
 
 import java.text.Normalizer;
+import java.util.Date;
+import java.util.Locale;
 
-class AppState {
+public class AppState {
     // Static variable reference of single_instance
     // of type Singleton
     private static AppState single_instance = null;
@@ -28,6 +31,7 @@ class AppState {
 
     // Declaring a variable of type String
     public String s;
+    public Date lastLogin;
 
 
     // Constructor
@@ -70,11 +74,16 @@ class AppState {
         // ăîâșț
 
 
-        city= city.replace('ş','s');
+        int i;
+        char s ;
+        city = city.replace("ș","s");
+//        city= city.replace("ș","s");
         city= city.replace('ă','a');
         city= city.replace('â','a');
         city= city.replace('ț','t');
         city= city.replace('î','i');
+
+        System.out.println("City after: "+city);
         this.city=city;
      
   }

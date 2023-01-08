@@ -21,8 +21,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.auth.User;
+import com.google.type.DateTime;
 
+import java.time.DateTimeException;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
@@ -64,16 +68,27 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-
-            BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                    .setTitle("Please Verify")
-                    .setDescription("User Authentication")
-                    .setNegativeButtonText("Cancel")
-                    .build();
-            getPrompt().authenticate(promptInfo);
-            AppState.getInstance().setAdmnin(currentUser);
-           // currentUser.reload();
+        if(currentUser != null && AppState.getInstance().lastLogin != null){
+            Date d = Calendar.getInstance().getTime();
+            long a = d.getTime() - AppState.getInstance().lastLogin.getTime();
+            if ( a > 3600000){
+                mAuth.signOut();
+            }
+            else {
+                BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                        .setTitle("Please Verify")
+                        .setDescription("User Authentication")
+                        .setNegativeButtonText("Cancel")
+                        .build();
+                getPrompt().authenticate(promptInfo);
+                AppState.getInstance().setAdmnin(currentUser);
+                System.out.println("USER: " + currentUser.getMetadata().getLastSignInTimestamp() / 1000);
+                // currentUser.reload();
+//            Date d = firebase
+                System.out.println("Metadata: " + currentUser.getMetadata().getLastSignInTimestamp());
+            }
+//
+//
         }
         else{
          System.out.println("FIREBASE: "+fb.getOptions());
@@ -115,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             System.out.println("User :  "+user.getEmail()+" "+user.getUid()+" "+FirebaseApp.getInstance() );
                             AppState.getInstance().setAdmnin(user);
+                            AppState.getInstance().lastLogin = Calendar.getInstance().getTime();
                             Intent intent = new Intent(LoginActivity.this, SourcesActivity.class);
                             startActivity(intent);
 //                            updateUI(user);

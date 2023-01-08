@@ -10,9 +10,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.upt.cti.weatherapp.Adapters.WeatherListAdapter;
+import com.upt.cti.weatherapp.Models.Weather;
+import com.upt.cti.weatherapp.Services.CalculateParams;
+
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DailyForecasts extends AppCompatActivity {
 

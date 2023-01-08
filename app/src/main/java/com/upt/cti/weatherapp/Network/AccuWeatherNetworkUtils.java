@@ -1,4 +1,4 @@
-package com.upt.cti.weatherapp;
+package com.upt.cti.weatherapp.Network;
 
 
 import android.net.Uri;
@@ -27,10 +27,10 @@ public class AccuWeatherNetworkUtils {
             "https://dataservice.accuweather.com/forecasts/v1/daily/5day/";
 
     private static String WEATHERDB_BASE_URL_CURRENT =
-            "http://dataservice.accuweather.com/forecasts/v1/hourly/1hour/";
+            "https://dataservice.accuweather.com/forecasts/v1/hourly/1hour/";
 
     private static String WEATHERDB_BASE_URL_HOURLY =
-            "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/";
+            "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/";
 
     private final static String API_KEY = "wcKFi03pnMHVVuZitC3reSGx6wdCkyaU";
 
@@ -45,7 +45,7 @@ public class AccuWeatherNetworkUtils {
 
     public static void addLocationKey(String key){
 //        System.out.println("Am ajuns la addLocationKey");
-        if(WEATHERDB_BASE_URL_CURRENT.length() == 61) {
+        if(WEATHERDB_BASE_URL_CURRENT.length() == 62) {
 //            System.out.println("Am ajuns la addLocationKey");
             WEATHERDB_BASE_URL_DAILY = WEATHERDB_BASE_URL_DAILY.concat(key);
             WEATHERDB_BASE_URL_CURRENT = WEATHERDB_BASE_URL_CURRENT.concat(key);

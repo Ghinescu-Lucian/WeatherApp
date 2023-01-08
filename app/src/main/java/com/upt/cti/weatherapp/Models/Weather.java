@@ -1,11 +1,11 @@
-package com.upt.cti.weatherapp;
+package com.upt.cti.weatherapp.Models;
 
 public class Weather {
     String date="abc";
     String minTemp;
     String maxTemp;
     String link;
-    String code;
+    public String code;
 
     public Weather(){
 

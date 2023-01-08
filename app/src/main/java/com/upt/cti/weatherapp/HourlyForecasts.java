@@ -7,13 +7,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.upt.cti.weatherapp.Adapters.WeatherListAdapter;
+import com.upt.cti.weatherapp.Models.Weather;
+import com.upt.cti.weatherapp.Services.CalculateParams;
+
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class HourlyForecasts extends AppCompatActivity {
 

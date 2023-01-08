@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.upt.cti.weatherapp.Adapters.WeatherAdapter;
+import com.upt.cti.weatherapp.Models.Weather;
+import com.upt.cti.weatherapp.Network.AccuWeatherNetworkUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

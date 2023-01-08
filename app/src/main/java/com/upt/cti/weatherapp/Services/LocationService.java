@@ -1,4 +1,4 @@
-package com.upt.cti.weatherapp;
+package com.upt.cti.weatherapp.Services;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.loopj.android.http.RequestParams;
+import com.upt.cti.weatherapp.AppState;
 
 
 import java.io.IOException;

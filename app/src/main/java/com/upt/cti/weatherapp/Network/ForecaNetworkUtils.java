@@ -1,4 +1,4 @@
-package com.upt.cti.weatherapp;
+package com.upt.cti.weatherapp.Network;
 
 import java.io.BufferedReader;
 import java.io.IOException;

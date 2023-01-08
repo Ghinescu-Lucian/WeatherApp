@@ -11,17 +11,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.common.data.DataBufferObserverSet;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.upt.cti.weatherapp.CustomSpinnerC.CustomSpinner;
 import com.upt.cti.weatherapp.CustomSpinnerC.Data;
 import com.upt.cti.weatherapp.CustomSpinnerC.Source;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

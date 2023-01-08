@@ -1,6 +1,4 @@
-package com.upt.cti.weatherapp;
-
-import android.icu.util.ValueIterator;
+package com.upt.cti.weatherapp.Models;
 
 public class LocationWeights {
     
